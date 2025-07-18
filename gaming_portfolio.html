@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aryan’s Game Portfolio</title>
+
+  <style>
+    :root{
+      --accent:#00c2ff;
+      --card:#1e1e30;
+      --text:#f4f4f7;
+    }
+
+    /* ---------- animated background ---------- */
+    body{
+      margin:0;
+      font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.6;
+      color:var(--text);
+      background:linear-gradient(-45deg, #0f0f1a 0%, #1a1a2e 25%, #16213e 50%, #0f0f1a 100%);
+      background-size:400% 400%;
+      animation:gradientShift 20s ease infinite;
+    }
+    @keyframes gradientShift{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    /* ---------- layout ---------- */
+    h1{
+      text-align:center;font-size:2.5rem;margin:2rem 0;
+      background:linear-gradient(45deg,var(--accent),#ff00c8);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:1.5rem;
+      max-width:1200px;
+      margin:auto;
+      padding:0 1rem 2rem;
+    }
+    @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){.grid{grid-template-columns:1fr;}}
+
+    /* ---------- accordion cards ---------- */
+    .card{
+      background:var(--card);border-radius:18px;box-shadow:0 8px 24px rgba(0,194,255,.3);
+      overflow:hidden;
+    }
+    .card input[type="radio"]{display:none;}
+    .card label{
+      display:block;cursor:pointer;padding:1rem 1.25rem;
+      font-size:1.25rem;font-weight:600;
+      position:relative;transition:background .25s;
+    }
+    .card label::after{
+      content:"▼";position:absolute;right:1.25rem;top:50%;
+      transform:translateY(-50%);transition:transform .3s;
+    }
+    .card input[type="radio"]:checked + label{background:rgba(255,255,255,.05);}
+    .card input[type="radio"]:checked + label::after{transform:translateY(-50%) rotate(180deg);}
+    .content{
+      max-height:0;overflow:hidden;transition:max-height .4s ease;
+      text-align:center;padding:0 1.25rem;
+    }
+    .card input[type="radio"]:checked ~ .content{
+      max-height:600px;padding-bottom:1.25rem;
+    }
+    .content img{
+      width:100%;max-width:240px;border-radius:12px;margin:.75rem 0;
+    }
+    .content p{color:#ddd;font-size:.95rem;margin-bottom:.5rem;}
+    .content a{color:var(--accent);}
+
+    /* ---------- animated orb & grid ---------- */
+@keyframes floatOrb {
+  0%   {transform:translate(0,0) scale(1);}
+  25%  {transform:translate(30vw,-20vh) scale(.8);}
+  50%  {transform:translate(60vw,10vh) scale(1.1);}
+  75%  {transform:translate(20vw,40vh) scale(.9);}
+  100% {transform:translate(0,0) scale(1);}
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle 40px at 20% 30%,rgba(255,255,255,.25) 0%, transparent 70%),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:100% 100%, 50px 50px, 50px 50px;
+  animation:floatOrb 25s linear infinite;
+}
+.card:hover{
+  box-shadow:0 0 20px var(--accent),0 0 40px var(--accent);
+  transform:translateY(-4px);
+  transition:all .3s ease;
+}
+  /* ---------- landing page ---------- */
+  #landing{
+    height:100vh;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;padding:2rem;position:relative;
+    background:radial-gradient(circle at 20% 30%,rgba(0,194,255,.15),transparent 70%),
+               linear-gradient(-45deg,#0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
+    background-size:400% 400%;animation:bgMove 20s ease infinite;
+  }
+  @keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+  #landing h2{font-size:2.5rem;margin-bottom:.5rem;background:linear-gradient(45deg,#00c2ff,#ff00c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  #landing p{max-width:600px;margin-bottom:2rem;color:#ddd;}
+  .btn{
+    padding:.9rem 2.2rem;border:none;border-radius:50px;
+    background:linear-gradient(45deg,#00c2ff,#ff00c8);color:#fff;font-weight:600;
+    text-decoration:none;box-shadow:0 0 15px rgba(0,194,255,.6);
+    transition:.3s;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 0 25px rgba(0,194,255,.9);}
+  /* scroll-behaviour for smooth jump */
+  html{scroll-behavior:smooth;}
+  /* ---------- neon social links ---------- */
+.social{
+  display:flex;gap:1rem;margin-top:1.5rem;
+}
+.link{
+  padding:.6rem 1.2rem;border:1px solid var(--accent);border-radius:50px;
+  color:var(--accent);text-decoration:none;font-weight:600;
+  transition:.3s;position:relative;overflow:hidden;
+}
+.link::before{
+  content:'';position:absolute;inset:0;background:var(--accent);z-index:-1;
+  transform:scaleX(0);transform-origin:left;transition:.3s;
+}
+.link:hover{
+  color:#111;box-shadow:0 0 15px var(--accent);
+}
+.link:hover::before{transform:scaleX(1);}
+/* ---------- repositioned social icons ---------- */
+#social-fixed{
+  position:fixed;top:1rem;left:1rem;z-index:9999;
+  display:flex;flex-direction:column;gap:.5rem;
+}
+#social-fixed a{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--accent);color:#111;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;text-decoration:none;transition:.3s;
+}
+#social-fixed a:hover{transform:scale(1.2);}
+  </style>
+
+</head>
+
+<body>
+    
+
+  <h1>My Game Portfolio</h1>
+      <!-- Landing / About -->
+<section id="landing">
+    <h2>Hi, I'm Aryan</h2>
+    <p>Hi, I’m Aryan — part-time bug squasher, full-time overthinker, and your friendly neighbourhood game dev in the making.
+
+        When I’m not writing code that miraculously works on the second try (because the first was clearly just a warm-up), I’m probably juggling academic chaos, organizing events, or pretending to debug while actually vibing to Bollywood soundtracks.
+        
+        I believe in building things that make people go:
+        "Wait... you made that?!"
+        Yes. Yes, I did. 😌
+        
+        Here, you’ll find a curated portfolio of my games, projects, and ideas – all built with a keyboard, caffeine, and a mild fear of deadlines. I love mixing tech with storytelling, challenge with creativity, and bugs with... more bugs.
+        
+        🚀 "If life’s a game, I’m coding the cheat codes."
+        
+        Let’s build, break, and beta test the future – one idea at a time.</p>
+    <a href="#portfolio" class="btn">View My Games</a>
+    <div class="social">
+        <a href="https://github.com/ARYAN16022" target="_blank" class="link">GitHub</a>
+        <a href="https://www.linkedin.com/in/aryan-aryan-19809129a/" target="_blank" class="link">LinkedIn</a>
+      </div>
+  </section>
+
+  <div id="portfolio" class="grid">
+    <!-- 1 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g1">
+      <label for="g1">1st game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/dNu_z56WNkPQPS-vucjoazt5eH1t9dH9IewKDURxH7o">
+          <img src="Icons/1st.jpg" alt="1st game">
+        </a>
+        <p>Ball bouncing inside a tunnel.</p>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g2">
+      <label for="g2">2nd game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/N5pfTHHM9EeCXq8dtI1h0ePoKUZoE_dBfbpmiIRKXIs">
+          <img src="Icons/2nd.jpg" alt="2nd game">
+        </a>
+        <p>Carrom board controlled with arrow keys.</p>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g3">
+      <label for="g3">3rd game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/nNN1RwCGoUCBzAp-9XMxPA0MsCaLYhz-itkFZRjbMFQ">
+          <img src="Icons/3rd.jpg" alt="3rd game">
+        </a>
+        <p>Conditional bouncy-ball mini-game.</p>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g4">
+      <label for="g4">4th game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/ezqAg_FqCSiXCK8fFDG7xqIHiaquxWZTxw5E7yhDCGE">
+          <img src="Icons/4th.jpg" alt="4th game">
+        </a>
+        <p>Apply vegetable images in a project.</p>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g5">
+      <label for="g5">5th game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/qbdnWNCLsxm7cS1ZzLeCqDoijQY0MaqZ0VEcvWXiH2g">
+          <img src="Icons/5th.jpg" alt="5th game">
+        </a>
+        <p>Single-player carrom vs. Sensor Robot.</p>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g6">
+      <label for="g6">6th game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/SsHAo56YxUQnfhnbAJAnvLRBscBegsfgZ5fF8DMuFAc">
+          <img src="Icons/6th.jpg" alt="6th game">
+        </a>
+        <p>Design your own game with story & goals.</p>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g7">
+      <label for="g7">7th game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/Fb3kmeTvqe0sLuj0bPe8eae3A0TVDU9ZosJ3J4a4a_Y">
+          <img src="Icons/7th.jpg" alt="7th game">
+        </a>
+        <p>Arrows destroy balloons on contact.</p>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g8">
+      <label for="g8">8th game</label>
+      <div class="content">
+        <a href="https://studio.code.org/projects/gamelab/T55iO46GYxCVIIlXwLcZSrEU1qpDKcYDOI3FsgK1FXI">
+          <img src="Icons/8th.jpg" alt="8th game">
+        </a>
+        <p>Improve your Fruit Ninja clone.</p>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g9">
+      <label for="g9">9th game</label>
+      <div class="content">
+        <a href="https://editor.p5js.org/goyalaryan85/full/lnEIH-cXl">
+          <img src="Icons/9th.jpg" alt="9th game">
+        </a>
+        <p>Monkey collects bananas and grows bigger.</p>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g10">
+      <label for="g10">10th game</label>
+      <div class="content">
+        <a href="https://editor.p5js.org/goyalaryan85/full/-DHq_xIPS">
+          <img src="Icons/10th.jpg" alt="10th game">
+        </a>
+        <p>Virtual squash for an injured friend.</p>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g11">
+      <label for="g11">11th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/TOM-CATCHES-JERRY/">
+          <img src="Icons/11st.jpg" alt="11th game">
+        </a>
+        <p>Tom & Jerry collision detection game.</p>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g12">
+      <label for="g12">12th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/GCSO/">
+          <img src="Icons/12th.jpg" alt="12th game">
+        </a>
+        <p>Car-crash safety simulator.</p>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g13">
+      <label for="g13">13th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/CAN-THE-BULLET-DAMAGE-A-WALL-/">
+          <img src="Icons/13th.jpg" alt="13th game">
+        </a>
+        <p>Bullet-vs-wall reliability test.</p>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g14">
+      <label for="g14">14th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/SUPPLY-MISSION-C23/">
+          <img src="Icons/14th.jpg" alt="14th game">
+        </a>
+        <p>Precision package-drop mission.</p>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g15">
+      <label for="g15">15th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/CRUMPLED-BALLS/">
+          <img src="Icons/15th.jpg" alt="15th game">
+        </a>
+        <p>Trash-can paper-ball challenge.</p>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g16">
+      <label for="g16">16th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/project-27/">
+          <img src="Icons/16th.jpg" alt="16th game">
+        </a>
+        <p>Newton’s Cradle momentum demo.</p>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g17">
+      <label for="g17">17th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/PLINKO-WITH-SCORES/">
+          <img src="Icons/17th.jpg" alt="17th game">
+        </a>
+        <p>Plinko with live scoring.</p>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g18">
+      <label for="g18">18th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/PROJECT-28-PLUCKING-THE-MANGOES-/">
+          <img src="Icons/18th.jpg" alt="18th game">
+        </a>
+        <p>Stone-throwing mango plucker.</p>
+      </div>
+    </div>
+
+    <!-- 19 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g19">
+      <label for="g19">19th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/PROJECT-34-KILL-THE-MONSTER-/">
+          <img src="Icons/19th.jpg" alt="19th game">
+        </a>
+        <p>Superhero vs monster — debug & improve.</p>
+      </div>
+    </div>
+
+    <!-- 20 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g20">
+      <label for="g20">20th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/PROJECT-37-MY-QUIZ-2-/">
+          <img src="Icons/20th.jpg" alt="20th game">
+        </a>
+        <p>Multiplayer quiz for Prakriti.</p>
+      </div>
+    </div>
+
+    <!-- 21 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g21">
+      <label for="g21">21st game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/Project-39-KANGAROO-IN-JUNGLE-2-/">
+          <img src="Icons/21st.jpg" alt="21st game">
+        </a>
+        <p>Add end/reset to hungry kangaroo.</p>
+      </div>
+    </div>
+
+    <!-- 22 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g22">
+      <label for="g22">22nd game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/project-42-shooting-range-/">
+          <img src="Icons/22nd.jpg" alt="22nd game">
+        </a>
+        <p>Virtual rifle range for Jack.</p>
+      </div>
+    </div>
+
+    <!-- 23 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g23">
+      <label for="g23">23rd game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/PROJECT-43-TREASURE-HUNT-/">
+          <img src="Icons/23rd.jpg" alt="23rd game">
+        </a>
+        <p>Treasure cave guardian quiz.</p>
+      </div>
+    </div>
+
+    <!-- 24 -->
+    <div class="card">
+      <input type="radio" name="acc" id="g24">
+      <label for="g24">24th game</label>
+      <div class="content">
+        <a href="https://aryan16022.github.io/SAVE-THE-CASTLE/">
+          <img src="Icons/24th.jpg" alt="24th game">
+        </a>
+        <p>Final bug-fix & release showcase.</p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
